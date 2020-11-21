@@ -4,7 +4,10 @@ Simple typescript tool to verify correct shipping configuration and calculation 
 
 Let´s be honest: Shipping methods can get quite complex with the Rule builder, various countries, tax status and more. At the end it becomes tedious to manually QA and test the configuration. Especially if you have 30+ countries with different shipping rates. I needed a simple tool to verify weight based shipping in this scenario.
 
-This gets complex as well quickly. Wouldn´t it nice if that tool could create test users and test products programmatically? What about different sales channels? What about variants? And so on.
+"If a logged in user from Italy puts Product A in the cart - are the calculated shipping rates the ones I expect?"
+
+This gets complex as well quickly. Wouldn´t it nice if that tool could create test users and test products programmatically? What about different sales channels? What about variants? Also there are some caveats to this approach: the REST API works different than the frontend experience. You need to change the appopriate shipping methods before putting items to the cart. Otherwise the adding will be rejected and the cart returns a shipping-blocked error.
+So unfortunately you can´t answer the question: does the user see the shipping methods he should see?
 
 At the end this gets so complex this could be a full blown tool with UI and database. And then it the end maybe it would be an idea to create testing rules via an UI. 
 

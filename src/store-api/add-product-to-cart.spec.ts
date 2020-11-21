@@ -7,9 +7,7 @@ import { switchContext } from './context'
 describe('Checkout - add Product', () => {
 
     let client: Got;
-
     const currentTestUser = testUsers.italian;
-
 
     const getLoggedInUserClient = async () => {
         const authResponse: StoreApiAuthResponse = await getAuthToken()
@@ -55,9 +53,13 @@ describe('Checkout - add Product', () => {
         let cart = await fetchCart(client);
 
         // verify that this it the shipping method we switched to earlier 
-        //expect(cart.deliveries[0].shippingMethod.id).toBe(shippingItaly);
+        expect(cart.deliveries[0].shippingMethod.id).toBe(addToCartTestdata.shippingMethods.shippingItaly);
 
+        // product weight: 35 kg
+        // shipping italy > 31 && < 41 kg = 141.52 gross
+        const shippingPriceGrossExpected = 141.52
+        const shippingUnitPrice = cart.deliveries[0].shippingCosts.unitPrice
 
-        console.log("cart", cart.deliveries[0].shippingCosts);
+        expect(shippingUnitPrice).toBe(shippingPriceGrossExpected)
     })
 })

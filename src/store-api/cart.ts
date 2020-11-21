@@ -12,12 +12,19 @@ interface Delivery {
         active: string,
         prices: []
     },
-    shippingCosts: {}
+    shippingCosts: ShippingCosts
     location: {
         country: {
             iso: string
         }
     }
+}
+
+interface ShippingCosts {
+    unitPrice: number,
+    totalPrice: number,
+    calculatedTaxes: {}[]
+    taxRules: {}[]
 }
 
 interface CartResponse {
