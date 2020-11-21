@@ -1,6 +1,6 @@
 # Shopware Shipping Testing
 
-Simple typescript tool to verify correct shipping configuration and calculation for Shopware 6.3.
+Simple typescript tool to verify correct shipping configuration and calculation for Shopware 6.3. Please refer to the API docs at https://docs.shopware.com/en/shopware-platform-dev-en/store-api-guide/authentication
 
 Let´s be honest: Shipping methods can get quite complex with the Rule builder, various countries, tax status and more. At the end it becomes tedious to manually QA and test the configuration. Especially if you have 30+ countries with different shipping rates. I needed a simple tool to verify weight based shipping in this scenario.
 
