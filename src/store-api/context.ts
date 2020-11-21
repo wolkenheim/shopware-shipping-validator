@@ -5,14 +5,21 @@ interface SwitchContextParam {
     shippingMethodId?: string,
 }
 
-const getShippingMethods = async (client: Got): Promise<{}> => {
+interface ShippingMethod {
+    id: string,
+    name: string,
+    active: boolean
+}
+
+const getAvailableShippingMethods = async (client: Got): Promise<ShippingMethod[]> => {
     const url = 'shipping-method'
 
-    const { body } = await client.post(url, {
+    const { body } = await client.post<ShippingMethod[]>(url, {
+        searchParams: { onlyAvailable: true },
         json: {
             "includes": {
                 "shipping_method": ["id", "name", "active"],
-            }
+            },
         }
     });
 
@@ -31,6 +38,6 @@ const switchContext = async (client: Got, switchContext: SwitchContextParam): Pr
 }
 
 export {
-    getShippingMethods,
+    getAvailableShippingMethods,
     switchContext
 }

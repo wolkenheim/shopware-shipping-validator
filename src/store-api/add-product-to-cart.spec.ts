@@ -2,7 +2,7 @@ import { Got } from 'got'
 import { StoreApiAuthResponse, apiClientFactory, getAuthToken, getUserLoginToken } from './auth'
 import { addItemToCartById, fetchCart } from './cart'
 import { testUsers, addToCartTestdata } from '../config'
-import { switchContext } from './context'
+import { switchContext, getAvailableShippingMethods } from './context'
 
 describe('Checkout - add Product', () => {
 
@@ -38,13 +38,23 @@ describe('Checkout - add Product', () => {
         expect(errorKeys[0].substr(0, 23)).toBe("shipping-method-blocked")
     });
 
-    it.only('should work', async () => {
+    it('italian customer should get two available shipping options', async () => {
+        const availableShippingMethods = await getAvailableShippingMethods(client);
+
+        // should be two shipping methods
+        expect(availableShippingMethods).toHaveLength(2);
+
+        // one of them should be italian shipping
+        let italianShippingMethod = availableShippingMethods.findIndex((s) => s.id === addToCartTestdata.shippingMethods.shippingItaly)
+        expect(italianShippingMethod).toBeGreaterThan(-1);
+    })
+
+    it('adding one item with 35kg weight should calculate costs correctly', async () => {
 
         let itemAddedResponse = await addItemToCartById(client, addToCartTestdata.products.selectedProduct.id)
 
         // cart delivieries country should be the one of logged in customer
         expect(itemAddedResponse!.deliveries[0].location.country.iso).toBe(currentTestUser.isoCode)
-
 
         // are there any errors? e.g. blocked shipping methods
         let errorKeys = Object.keys(itemAddedResponse.errors);
