@@ -14,6 +14,17 @@ interface UserLoginResponse {
     contextToken: string
 }
 
+const getLoggedInUserClient = async (currentTestUser: UserLogin): Promise<Got> => {
+    const authResponse: StoreApiAuthResponse = await getAuthToken()
+    let client: Got = apiClientFactory(authResponse.token);
+
+    // get user login client and overwrite first token
+    const userLoginToken: string = await getUserLoginToken(client, currentTestUser);
+    client = apiClientFactory(userLoginToken)
+
+    return client;
+}
+
 const getAuthToken = async (): Promise<StoreApiAuthResponse> => {
     const url = config.baseUrl + 'store-api/' + config.shopwareApiVersion + '/context'
 
@@ -51,9 +62,7 @@ const getUserLoginToken = async (client: Got, user: UserLogin): Promise<string> 
 const logoutCurrentUser = async (client: Got): Promise<void> => {
     const url = 'account/logout'
 
-    const { body } = await client.post(url, {
-        json: {}
-    });
+    await client.post(url);
 }
 
 export {
@@ -63,5 +72,6 @@ export {
     getAuthToken,
     getUserLoginToken,
     apiClientFactory,
-    logoutCurrentUser
+    logoutCurrentUser,
+    getLoggedInUserClient
 }

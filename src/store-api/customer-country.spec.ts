@@ -1,20 +1,14 @@
-import { Got } from 'got'
-import { StoreApiAuthResponse, apiClientFactory, getAuthToken, getUserLoginToken, UserLogin, logoutCurrentUser } from './auth'
+import { getLoggedInUserClient, logoutCurrentUser, UserLogin } from './auth'
 
-import { getContext, ContextResponse } from './store-api-sales'
+import { getContext } from './store-api-sales'
 import { getCustomerAddresses } from './account';
 
 import { testUsers } from '../config';
 
 describe('Account Login', () => {
 
-    const testFactory = async (testUser: UserLogin, testCountryIso: string): Promise<void> => {
-        const authResponse: StoreApiAuthResponse = await getAuthToken()
-        let client: Got = apiClientFactory(authResponse.token)
-
-        // get user login client and overwrite first token
-        const userLoginToken: string = await getUserLoginToken(client, testUser)
-        client = apiClientFactory(userLoginToken);
+    const testFactory = async (currentTestUser: UserLogin, testCountryIso: string): Promise<void> => {
+        let client = await getLoggedInUserClient(currentTestUser);
 
         const addresses = await getCustomerAddresses(client);
 

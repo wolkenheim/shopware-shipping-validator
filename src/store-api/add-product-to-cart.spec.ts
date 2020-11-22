@@ -1,5 +1,5 @@
 import { Got } from 'got'
-import { StoreApiAuthResponse, apiClientFactory, getAuthToken, getUserLoginToken } from './auth'
+import { getLoggedInUserClient, logoutCurrentUser } from './auth'
 import { addItemToCartById, fetchCart } from './cart'
 import { testUsers, addToCartTestdata } from '../config'
 import { switchContext, getAvailableShippingMethods } from './context'
@@ -9,22 +9,15 @@ describe('Checkout - add Product', () => {
     let client: Got;
     const currentTestUser = testUsers.italian;
 
-    const getLoggedInUserClient = async () => {
-        const authResponse: StoreApiAuthResponse = await getAuthToken()
-        let client: Got = apiClientFactory(authResponse.token);
-
-        // get user login client and overwrite first token
-        const userLoginToken: string = await getUserLoginToken(client, currentTestUser.login);
-        client = apiClientFactory(userLoginToken)
-
-        return client;
-    }
-
     beforeEach(async () => {
-        client = await getLoggedInUserClient();
+        client = await getLoggedInUserClient(currentTestUser.login);
 
         // switch shipping method to pick up
         await switchContext(client, { shippingMethodId: addToCartTestdata.shippingMethods.shippingItaly })
+    })
+
+    afterAll(async () => {
+        await logoutCurrentUser(client);
     })
 
     it('shipping method for wrong country should result in cart error', async () => {
@@ -38,8 +31,10 @@ describe('Checkout - add Product', () => {
         expect(errorKeys[0].substr(0, 23)).toBe("shipping-method-blocked")
     });
 
-    it('italian customer should get two available shipping options', async () => {
+    it.only('italian customer should get two available shipping options', async () => {
         const availableShippingMethods = await getAvailableShippingMethods(client);
+
+        console.log(availableShippingMethods);
 
         // should be two shipping methods
         expect(availableShippingMethods).toHaveLength(2);
