@@ -17,7 +17,9 @@ const getAvailableShippingMethods = async (client: Got): Promise<ShippingMethod[
     const { body } = await client.post<ShippingMethod[]>(url, {
         searchParams: { onlyAvailable: true },
         json: {
-
+            "includes": {
+                "shipping_method": ["id", "name", "active"],
+            },
         }
     });
 

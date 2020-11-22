@@ -34,8 +34,6 @@ describe('Checkout - add Product', () => {
     it.only('italian customer should get two available shipping options', async () => {
         const availableShippingMethods = await getAvailableShippingMethods(client);
 
-        console.log(availableShippingMethods);
-
         // should be two shipping methods
         expect(availableShippingMethods).toHaveLength(2);
 
