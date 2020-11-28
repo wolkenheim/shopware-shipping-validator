@@ -41,7 +41,7 @@ interface CartResponse {
 
 }
 
-const addItemToCartById = async (client: Got, productId: string): Promise<AddItemsToCartResponse> => {
+const addItemToCartById = async (client: Got, productId: string, qty = 1): Promise<AddItemsToCartResponse> => {
     const url = 'checkout/cart/line-item'
 
     const { body } = await client.post<AddItemsToCartResponse>(url, {
@@ -50,7 +50,7 @@ const addItemToCartById = async (client: Got, productId: string): Promise<AddIte
                 {
                     "type": "product",
                     "referencedId": productId,
-                    "quantity": 1
+                    "quantity": qty
                 }
             ]
         }

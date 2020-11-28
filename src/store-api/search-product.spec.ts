@@ -21,6 +21,8 @@ describe('Search Product', () => {
         const testProduct = 'EDER - FassStolz® 100 l'
         let products: SearchResult = await searchProducts(client, testProduct)
 
+        console.log(products.elements[0]['id']);
+
         expect(products.total).toBe(1);
         expect(products.elements[0]['name']).toBe(testProduct)
     })

@@ -17,3 +17,7 @@ npm install
 
 You need to insert some data in src/config.ts. 
 Then pick your testing commands from package.json and run them. This is a pure testing tool based on ts-jest so no build or dev.
+
+## Rest API client
+Get the credentials Backend > System > Integrations
+https://docs.shopware.com/en/shopware-6-en/settings/system/integrationen

@@ -65,4 +65,25 @@ describe('Checkout - add Product', () => {
 
         expect(shippingUnitPrice).toBe(shippingPriceGrossExpected)
     })
+
+    it('adding more than 400kg for italian customer should disable regular italian shipping and enable individual calculation shipping method ', async () => {
+
+        // 20 x 35kg = 700 kg. Individual calculation shipping method start at >= 400kg
+        let itemAddedResponse = await addItemToCartById(client, addToCartTestdata.products.selectedProduct.id, 20)
+
+        // cart delivieries country should be the one of logged in customer
+        expect(itemAddedResponse!.deliveries[0].location.country.iso).toBe(currentTestUser.isoCode)
+
+        // regular italian shipping should be blocked
+        let errorKeys = Object.keys(itemAddedResponse.errors);
+        expect(errorKeys).toHaveLength(1);
+        expect(errorKeys[0]).toMatch("shipping-method-blocked-Italien Versand")
+
+        const availableShippingMethods = await getAvailableShippingMethods(client);
+
+        // one of them should be italian shipping for individual calculation of shipping costs
+        let italianShippingMethod = availableShippingMethods.findIndex((s) => s.id === addToCartTestdata.shippingMethods.shippingItalyTooHeavy)
+        expect(italianShippingMethod).toBeGreaterThan(-1);
+
+    })
 })
