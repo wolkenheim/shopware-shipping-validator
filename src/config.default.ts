@@ -36,4 +36,11 @@ const addToCartTestdata = {
     }
 }
 
-export { config, testUsers, addToCartTestdata }
+const restApiConfig = {
+    baseUrl: 'http://shopwareurl...',
+    shopwareApiVersion: 'v3',
+    clientId: 'clientid',
+    clientSecret: 'secret'
+}
+
+export { config, testUsers, addToCartTestdata, restApiConfig }

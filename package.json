@@ -5,6 +5,8 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
+    "list": "jest src/rest-api/list.spec.ts",
+    "list:shipping-methods": "jest src/store-api/list-ressources.spec.ts",
     "test:add-product": "jest src/store-api/add-product-to-cart.spec.ts",
     "test:customer-country": "jest src/store-api/customer-country.spec.ts"
   },

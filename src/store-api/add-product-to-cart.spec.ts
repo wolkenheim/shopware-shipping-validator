@@ -31,7 +31,7 @@ describe('Checkout - add Product', () => {
         expect(errorKeys[0].substr(0, 23)).toBe("shipping-method-blocked")
     });
 
-    it.only('italian customer should get two available shipping options', async () => {
+    it('italian customer should get two available shipping options', async () => {
         const availableShippingMethods = await getAvailableShippingMethods(client);
 
         // should be two shipping methods
