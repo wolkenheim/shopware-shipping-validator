@@ -1,8 +1,8 @@
 import { Got } from 'got'
-import { StoreApiAuthResponse, apiClientFactory, getAuthToken, getUserLoginToken } from './auth'
-import { testUsers } from '../config'
+import { StoreApiAuthResponse, apiClientFactory, getAuthToken, getUserLoginToken } from '../../store-api/auth'
+import { testUsers } from '../../config'
 
-import { searchProducts, SearchResult } from './product'
+import { searchProducts, SearchResult } from '../../store-api/product'
 
 
 describe('Search Product', () => {

@@ -1,9 +1,9 @@
-import { getLoggedInUserClient, logoutCurrentUser, UserLogin } from './auth'
+import { getLoggedInUserClient, logoutCurrentUser, UserLogin } from '../../store-api/auth'
 
-import { getContext } from './store-api-sales'
-import { getCustomerAddresses } from './account';
+import { getContext } from '../../store-api/store-api-sales'
+import { getCustomerAddresses } from '../../store-api/account';
 
-import { testUsers } from '../config';
+import { testUsers } from '../../config';
 
 describe('Account Login', () => {
 

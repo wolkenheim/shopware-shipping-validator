@@ -1,7 +1,7 @@
 import { Got } from 'got'
-import { getLoggedInUserClient, logoutCurrentUser } from './auth'
-import { testUsers } from '../config'
-import { switchContext, getAvailableShippingMethods } from './context'
+import { getLoggedInUserClient, logoutCurrentUser } from '../../store-api/auth'
+import { testUsers } from '../../config'
+import { switchContext, getAvailableShippingMethods } from '../../store-api/context'
 
 describe('list api ressources', () => {
     let client: Got;

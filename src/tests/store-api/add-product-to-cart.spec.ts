@@ -1,8 +1,8 @@
 import { Got } from 'got'
-import { getLoggedInUserClient, logoutCurrentUser } from './auth'
-import { addItemToCartById, fetchCart } from './cart'
-import { testUsers, addToCartTestdata } from '../config'
-import { switchContext, getAvailableShippingMethods } from './context'
+import { getLoggedInUserClient, logoutCurrentUser } from '../../store-api/auth'
+import { addItemToCartById, fetchCart } from '../../store-api/cart'
+import { testUsers, addToCartTestdata } from '../../config'
+import { switchContext, getAvailableShippingMethods } from '../../store-api/context'
 
 describe('Checkout - add Product', () => {
 

@@ -8,11 +8,6 @@ interface AuthResponse {
     token_type: string
 }
 
-interface ShippingMethod {
-    name: string,
-    id: string,
-}
-
 const getAuthToken = async (): Promise<AuthResponse> => {
     const url = restApiConfig.baseUrl + 'api/oauth/token'
     const params = {
@@ -28,28 +23,22 @@ const getAuthToken = async (): Promise<AuthResponse> => {
     return body as AuthResponse
 }
 
-const apiClientFactory = (token: string): Got => {
+const apiClientFactory = async (): Promise<Got> => {
+
+    const authResponse: AuthResponse = await getAuthToken()
+
     return got.extend({
 
         prefixUrl: restApiConfig.baseUrl + 'api/' + restApiConfig.shopwareApiVersion + '/',
         headers: {
-            Authorization: token
+            Authorization: authResponse.access_token
         },
         responseType: 'json'
     });
 }
 
-const getAllShippingMethods = async (client: Got) => {
-    const url = 'shipping-method'
-    const { body } = await client.get<{ data: ShippingMethod[] }>(url);
-
-    return body
-}
-
-
 export {
     AuthResponse,
     getAuthToken,
-    apiClientFactory,
-    getAllShippingMethods
+    apiClientFactory
 }

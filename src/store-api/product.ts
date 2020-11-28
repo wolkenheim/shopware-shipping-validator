@@ -19,7 +19,7 @@ const searchProducts = async (client: Got, searchTerm: string): Promise<SearchRe
                 {
                     "score": 500,
                     "query": { "type": "equals", "field": "name", "value": searchTerm }
-                },
+                }
             ],
             "includes": {
                 "product": ["id", "name"]

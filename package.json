@@ -5,11 +5,11 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "list:shipping-all": "jest src/rest-api/list.spec.ts",
-    "list:shipping-available": "jest src/store-api/list-ressources.spec.ts",
-    "test:search-product": "jest src/store-api/search-product.spec.ts",
-    "test:add-product": "jest src/store-api/add-product-to-cart.spec.ts",
-    "test:customer-country": "jest src/store-api/customer-country.spec.ts"
+    "list:shipping-all": "jest src/tests/rest-api/list.spec.ts",
+    "list:shipping-available": "jest src/tests/store-api/list-ressources.spec.ts",
+    "test:search-product": "jest src/tests/store-api/search-product.spec.ts",
+    "test:add-product": "jest src/tests/store-api/add-product-to-cart.spec.ts",
+    "test:customer-country": "jest src/tests/store-api/customer-country.spec.ts"
   },
   "author": "",
   "license": "ISC",
